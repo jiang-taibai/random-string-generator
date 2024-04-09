@@ -62,13 +62,13 @@ onMounted(() => {
 <style scoped lang="less">
 .title-box {
   overflow: hidden;
-  white-space: nowrap;
+  text-align: center;
 
   span {
     font-size: 50px;
     font-weight: bold;
     color: rgba(240, 240, 240, 0.8);
-    white-space: nowrap;
+    word-break: break-all;
   }
 }
 </style>
