@@ -1,4 +1,5 @@
 import {getRandomString} from "./random.js";
+import {LengthTypeKeys} from "./base-data.js";
 
 /**
  * 根据给定的配置生成随机字符串
@@ -28,7 +29,7 @@ export const calculateGenerateByConfigParameter = (config) => {
     const enabledLowercaseLetters = config.enabledLowercaseLetters.filter(item => item.checked).map(item => item.key);
     const enabledUppercaseLetters = config.enabledUppercaseLetters.filter(item => item.checked).map(item => item.key);
     const enabledSpecialCharacters = config.enabledSpecialCharacters.filter(item => item.checked).map(item => item.key);
-    const length = config.length;
+    const length = config.lengthType === LengthTypeKeys.Fixed ? config.fixedLength : config.rangeLength;
     return {
         enabledNumbers,
         enabledLowercaseLetters,

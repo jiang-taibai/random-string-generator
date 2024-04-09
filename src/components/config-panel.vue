@@ -8,20 +8,20 @@ import {
   NConfigProvider
 } from "naive-ui";
 import Picker from "./picker.vue";
+import {LengthTypeKeys} from "../assets/js/base-data.js";
 
 const props = defineProps({config: Object})
 
 const lengthTypes = {
   fixed: {
-    key: 'fixed',
+    key: LengthTypeKeys.Fixed,
     label: '固定'
   },
   range: {
-    key: 'range',
+    key: LengthTypeKeys.Range,
     label: '范围'
   },
 }
-const lengthType = ref(lengthTypes.fixed.key)
 
 // Functions
 const validateMinLength = (val) => {
@@ -29,14 +29,6 @@ const validateMinLength = (val) => {
 }
 const validateMaxLength = (val) => {
   return Number.isInteger(val) && val >= 1 && props.config.minLength <= val;
-}
-const updateLengthType = (val) => {
-  lengthType.value = val
-  if (val === lengthTypes.fixed.key) {
-    props.config.length = props.config.minLength
-  } else {
-    props.config.length = [props.config.minLength, props.config.maxLength]
-  }
 }
 </script>
 
@@ -46,29 +38,32 @@ const updateLengthType = (val) => {
       <div class="item">
         <div class="title">长度</div>
         <div class="content">
-          <n-radio-group v-model:value="lengthType" @update:value="updateLengthType" name="lengthType">
+          <n-radio-group v-model:value="props.config.lengthType" name="lengthType">
             <n-radio-button :key="lengthTypes.fixed.key"
                             :value="lengthTypes.fixed.key" :label="lengthTypes.fixed.label"/>
             <n-radio-button :key="lengthTypes.range.key"
                             :value="lengthTypes.range.key" :label="lengthTypes.range.label"/>
           </n-radio-group>
-          <n-input-number v-model:value="props.config.minLength" :min="1" :show-button="false"
-                          :validator="validateMinLength" style="width: 150px; text-align: right">
-            <template #suffix>≤</template>
-          </n-input-number>
-          <n-slider v-if="lengthType === lengthTypes.range.key" :range="true" :step="1"
-                    :max="props.config.maxLength === null ? 1 : props.config.maxLength"
-                    :min="props.config.minLength === null ? 1 : props.config.minLength"
-                    v-model:value="props.config.length"/>
-          <n-slider v-else :range="false" :step="1"
-                    show-tooltip
-                    :max="props.config.maxLength === null ? 1 : props.config.maxLength"
-                    :min="props.config.minLength === null ? 1 : props.config.minLength"
-                    v-model:value="props.config.length"/>
-          <n-input-number v-model:value="props.config.maxLength" :min="1" :show-button="false"
-                          :validator="validateMaxLength" style="width: 150px;">
-            <template #prefix>≤</template>
-          </n-input-number>
+          <div
+              style="flex: 1; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 8px;">
+            <n-input-number v-model:value="props.config.minLength" :min="1" :show-button="false"
+                            :validator="validateMinLength" style="width: 150px; text-align: right">
+              <template #suffix>≤</template>
+            </n-input-number>
+            <n-slider v-if="props.config.lengthType === lengthTypes.range.key" :range="true" :step="1"
+                      :max="props.config.maxLength === null ? 1 : props.config.maxLength"
+                      :min="props.config.minLength === null ? 1 : props.config.minLength"
+                      v-model:value="props.config.rangeLength"/>
+            <n-slider v-else :range="false" :step="1"
+                      show-tooltip
+                      :max="props.config.maxLength === null ? 1 : props.config.maxLength"
+                      :min="props.config.minLength === null ? 1 : props.config.minLength"
+                      v-model:value="props.config.fixedLength"/>
+            <n-input-number v-model:value="props.config.maxLength" :min="1" :show-button="false"
+                            :validator="validateMaxLength" style="width: 150px;">
+              <template #prefix>≤</template>
+            </n-input-number>
+          </div>
         </div>
       </div>
 
@@ -128,6 +123,7 @@ const updateLengthType = (val) => {
       display: flex;
       gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
     }
   }
 }
