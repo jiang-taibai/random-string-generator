@@ -14,5 +14,26 @@ export const Icons = {
 
 // 本地存储的键
 export const StorageKeys = {
-    Config: "config-v1",
+    Config: "config-v2",
+}
+
+export const LengthTypeKeys = {
+    Fixed: "fixed",
+    Range: "range",
+}
+
+const StorageKeysUpdateLog = {
+    'config-v1': {
+        time: "2024-04-05",
+        logs: [
+            "1. 完成基本功能",
+        ],
+    },
+    'config-v2': {
+        time: "2024-04-09",
+        logs: [
+            "1. 添加固定长度和范围长度的配置项: {rangeLength, fixedLength}",
+            "1. 添加长度类型的配置: {lengthType}",
+        ],
+    },
 }
