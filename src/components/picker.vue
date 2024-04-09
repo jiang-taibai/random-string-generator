@@ -2,12 +2,6 @@
 import {defineProps, computed} from "vue";
 
 const props = defineProps({candidate: Array})
-const defaultCandidate = [
-  {key: 'a', label: 'A', checked: false},
-  {key: 'b', label: 'B', checked: false},
-  {key: 'c', label: 'C', checked: false},
-  {key: 'd', label: 'D', checked: false},
-]
 
 // Computed
 const allChecked = computed(() => {
@@ -56,7 +50,6 @@ const onCheckOne = (idx) => {
     border-radius: 4px;
     color: #63e2b7;
     border: 0.8px solid rgba(255, 255, 255, 0.24);
-    transition: ease-in-out 0.2s;
   }
 
   .button:hover {
@@ -64,7 +57,7 @@ const onCheckOne = (idx) => {
   }
 
   .active {
-    background-color: #63e2b7;
+    background: rgba(99, 226, 183, 0.9);
     color: #000000;
   }
 }
