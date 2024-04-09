@@ -1,5 +1,10 @@
 <script setup>
-import {ref, reactive, onMounted, watch, computed, watchEffect, onBeforeMount} from "vue";
+import {
+  ref,
+  onMounted,
+  computed,
+  watchEffect,
+} from "vue";
 import {
   createDiscreteApi, darkTheme,
   NButton, NConfigProvider,
@@ -20,6 +25,19 @@ import {generateByConfig} from "./assets/js/utils.js";
 import RandomTitle from "./components/random-title.vue";
 import ConfigPanel from "./components/config-panel.vue";
 import {StorageKeys} from "./assets/js/base-data.js";
+import Clipboard from "clipboard";
+
+let clipboard = new Clipboard("#button-copy", {
+  text: () => {
+    return str.value;
+  },
+});
+clipboard.on("success", () => {
+  message.success("拷贝成功！")
+});
+clipboard.on("error", () => {
+  message.error("拷贝失败，请手动选中拷贝。")
+});
 
 // Variables
 const str = ref("");
@@ -31,8 +49,8 @@ const loadConfig = () => {
     return JSON.parse(JSON.stringify(defaultConfig));
   }
 }
-const config = ref(loadConfig());
 
+const config = ref(loadConfig());
 // Functions
 const onGenerate = () => {
   onGenerateByConfig(config.value)
@@ -40,11 +58,6 @@ const onGenerate = () => {
 const onGenerateByConfig = (_config) => {
   str.value = generateByConfig(_config);
 }
-const onCopy = () => {
-  navigator.clipboard.writeText(str.value);
-  message.success("拷贝成功！")
-}
-
 
 // Lifecycle
 onMounted(() => {
@@ -69,7 +82,7 @@ watchEffect(() => {
                   class="button-item" @click="onGenerate">生成
         </n-button>
         <n-button strong secondary type="primary" block
-                  class="button-item" @click="onCopy">拷贝
+                  class="button-item" id="button-copy">拷贝
         </n-button>
       </div>
       <div style="height: 20px"></div>
@@ -85,12 +98,16 @@ watchEffect(() => {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  min-height: 100vh;
   max-width: 850px;
-  margin: 200px auto 0;
+  margin: 0 auto;
+  padding: 10vh 20px;
 
   .random-title-box {
-    margin-bottom: 40px;
+    padding-bottom: 10vh;
+  }
+
+  .config-panel-box {
+    max-width: 850px;
   }
 
   .button-group {
@@ -104,13 +121,8 @@ watchEffect(() => {
   }
 
   .string-display-box {
-    width: 600px;
-    margin: 0 auto;
+    max-width: 600px;
   }
 
-  .config-panel-box {
-    margin: 0 auto;
-    max-width: 850px;
-  }
 }
 </style>
