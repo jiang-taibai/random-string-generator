@@ -24,6 +24,7 @@ const enabledUppercaseLetters = UppercaseLetters.split('')
 // Variables
 let randomShowInterval = null
 const titleElement = ref(null)
+const containerElement = ref(null)
 const randomTitleText = ref(props.title)
 
 // Functions
@@ -54,7 +55,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="title-box">
+  <div class="title-box" ref="containerElement">
     <span ref="titleElement">{{ randomTitleText }}</span>
   </div>
 </template>

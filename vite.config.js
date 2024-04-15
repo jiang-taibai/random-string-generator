@@ -6,4 +6,5 @@ import {viteSingleFile} from "vite-plugin-singlefile"
 export default defineConfig({
     plugins: [vue(), viteSingleFile({useRecommendedBuildConfig: true})],
     base: './',
+    publicDir: 'public',
 })
