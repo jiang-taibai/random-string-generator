@@ -4,7 +4,7 @@ import {viteSingleFile} from "vite-plugin-singlefile"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), viteSingleFile({useRecommendedBuildConfig: true})],
+    plugins: [vue(), viteSingleFile({useRecommendedBuildConfig: false})],
     base: './',
     publicDir: 'public',
 })
