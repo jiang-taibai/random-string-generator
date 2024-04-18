@@ -114,7 +114,7 @@ const validateMaxLength = (val) => {
     align-items: center;
 
     .title {
-      width: 80px;
+      width: 4em;
       text-align: right;
     }
 
